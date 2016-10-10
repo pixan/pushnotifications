@@ -1,0 +1,18 @@
+{
+    "name": "pixan/pushnotifications",
+    "description": "Push notification services for app development from Pixan LLC",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Guillermo Villalobos",
+            "email": "guillermo@dvlop.mx"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Pixan\\PushNotifications\\": "src/"
+        }
+    },
+}
