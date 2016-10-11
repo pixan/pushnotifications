@@ -4,7 +4,7 @@ namespace Pixan\PushNotifications;
 
 use Illuminate\Support\ServiceProvider;
 
-class BasicServiceProvider extends ServiceProvider
+class PushNotificationServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -14,7 +14,7 @@ class BasicServiceProvider extends ServiceProvider
     public function boot()
     {
         //
-		\Illuminate\Support\Facades\Route::model('pushnotification', Pixan\Basic\Models\PushNotification::class);
+		\Illuminate\Support\Facades\Route::model('pushnotification', Pixan\PushNotifications\Models\PushNotification::class);
         $this->publishes([__DIR__.'/migrations/2016_10_02_225028_create_push_notifications_table.php' => 'database/migrations/2016_10_02_225028_create_push_notifications_table.php']);
 
     }
