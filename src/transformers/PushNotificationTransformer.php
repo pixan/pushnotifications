@@ -9,7 +9,8 @@ class PushNotificationTransformer extends Transformer {
 	    $transformation = [
 	        "id" => $pushNotification["id"],
             "title" => $pushNotification["title"],
-            "active" => $pushNotification["active"]
+            "active" => $pushNotification["active"],
+            "enabled" => isset($pushNotification["enabled"]) ? (bool)$pushNotification["enabled"] : false
         ];
 		return $transformation;
 	}
