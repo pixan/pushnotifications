@@ -15,9 +15,10 @@ class PushNotificationServiceProvider extends ServiceProvider
     {
         //
 		\Illuminate\Support\Facades\Route::model('pushnotification', Pixan\PushNotifications\Models\PushNotification::class);
-        $this->publishes([__DIR__.'/migrations/2016_10_02_225028_create_push_notifications_table.php' => 'database/migrations/2016_10_02_225028_create_push_notifications_table.php']);
-        $this->publishes([__DIR__.'/migrations/2016_10_11_225115_create_push_notification_user_table.php' => 'database/migrations/2016_10_11_225115_create_push_notification_user_table.php']);
-
+        $this->publishes([
+            __DIR__.'/migrations/2016_10_02_225028_create_push_notifications_table.php' => 'database/migrations/2016_10_02_225028_create_push_notifications_table.php',
+            __DIR__.'/migrations/2016_10_11_225115_create_push_notification_user_table.php' => 'database/migrations/2016_10_11_225115_create_push_notification_user_table.php'
+        ]);
 	}
 
     /**
