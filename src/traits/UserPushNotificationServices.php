@@ -16,7 +16,7 @@ trait UserPushNotificationServices
 
         $pushNotifications = PushNotification::leftJoin('push_notification_user', function($join) use ($user_id) {
             $join->on('push_notifications.id', '=', 'push_notification_user.push_notification_id');
-            $join->on('push_notification_user.user_id', \DB::raw($user_id));
+            $join->on('push_notification_user.user_id', '=', \DB::raw($user_id));
         })->select(\DB::raw('push_notifications.*, CASE WHEN push_notification_user.id IS NULL THEN 0 ELSE 1 END AS enabled'))->get();
 
         return $apiController->respondWithData([
