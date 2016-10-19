@@ -24,11 +24,12 @@ trait UserPushNotificationServices
         ]);
     }
 
-    public function update($user_id, Request $request, APIController $apiController, PushNotificationTransformer $pushNotificationTransformer){
+    public function update($user_id, $pushNotification_id, Request $request, APIController $apiController, PushNotificationTransformer $pushNotificationTransformer){
         $user = User::findOrFail($user_id);
 
         $validator = Validator::make($request->all(), [
-           'pushNotification_id' => 'required|array|exists:push_notifications,id'
+           'pushNotification_id' => 'required|exists:push_notifications,id',
+		   'status'	=> 'required|boolean'
         ]);
 
         if($validator->fails()){
@@ -37,19 +38,18 @@ trait UserPushNotificationServices
             );
         }
 
-        $pushNotifications = PushNotification::all();
-        foreach($pushNotifications as $pushNotification){
-            $pushNotification->users()->detach();
-        }
-
-        $pushNotifications = PushNotification::find($request->get('pushNotification_id'));
-        foreach($pushNotifications as $pushNotification){
-            $pushNotification->users()->syncWithoutDetaching([$user_id]);
-            $pushNotification->enabled = true;
-        }
+        $pushNotifications = PushNotification::find($pushNotification_id);
+		if(boolval($request->get('status'))){
+			$pushNotification->users()->attach($user_id);
+			$pushNotification->enabled = true;
+		}
+		else{
+			$pushNotification->users()->detach($user_id);
+			$pushNotification->enabled = false;
+		}
 
         return $apiController->respondWithData([
-            'pushNotification' => $pushNotificationTransformer->transformCollection($pushNotifications->all())
+            'pushNotification' => $pushNotificationTransformer->transform($pushNotification)
         ]);
 
     }
