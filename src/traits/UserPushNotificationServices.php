@@ -28,7 +28,6 @@ trait UserPushNotificationServices
         $user = User::findOrFail($user_id);
 
         $validator = Validator::make($request->all(), [
-           'pushNotification_id' => 'required|exists:push_notifications,id',
 		   'status'	=> 'required|boolean'
         ]);
 
@@ -38,7 +37,7 @@ trait UserPushNotificationServices
             );
         }
 
-        $pushNotifications = PushNotification::find($pushNotification_id);
+        $pushNotifications = PushNotification::findOrFail($pushNotification_id);
 		if(boolval($request->get('status'))){
 			$pushNotification->users()->attach($user_id);
 			$pushNotification->enabled = true;
