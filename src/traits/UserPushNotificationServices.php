@@ -24,7 +24,7 @@ trait UserPushNotificationServices
         ]);
     }
 
-    public function store($user_id, Request $request, APIController $apiController, PushNotificationTransformer $pushNotificationTransformer){
+    public function update($user_id, Request $request, APIController $apiController, PushNotificationTransformer $pushNotificationTransformer){
         $user = User::findOrFail($user_id);
 
         $validator = Validator::make($request->all(), [
@@ -48,7 +48,7 @@ trait UserPushNotificationServices
             $pushNotification->enabled = true;
         }
 
-        return $apiController->respondCreated([
+        return $apiController->respondWithData([
             'pushNotification' => $pushNotificationTransformer->transformCollection($pushNotifications->all())
         ]);
 
