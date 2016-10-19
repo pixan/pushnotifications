@@ -37,7 +37,7 @@ trait UserPushNotificationServices
             );
         }
 
-        $pushNotifications = PushNotification::findOrFail($pushNotification_id);
+        $pushNotification = PushNotification::findOrFail($pushNotification_id);
 		if(boolval($request->get('status'))){
 			$pushNotification->users()->attach($user_id);
 			$pushNotification->enabled = true;
