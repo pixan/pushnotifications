@@ -23,6 +23,7 @@ class PushNotificationServiceProvider extends ServiceProvider
             __DIR__.'/migrations/2016_10_02_225028_create_push_notifications_table.php' => 'database/migrations/2016_10_02_225028_create_push_notifications_table.php',
             __DIR__.'/migrations/2016_10_11_225115_create_push_notification_user_table.php' => 'database/migrations/2016_10_11_225115_create_push_notification_user_table.php'
         ]);
+		$this->registerHelpers();
 	}
 
     /**
@@ -37,4 +38,13 @@ class PushNotificationServiceProvider extends ServiceProvider
             __DIR__.'/config/pixanpushnotifications.php', 'pixanpushnotifications'
         );
     }
+
+	public function registerHelpers()
+	{
+	    // Load the helpers in app/Http/helpers.php
+	    if (file_exists($file = __DIR__.'/helpers/helpers.php'))
+	    {
+	        require $file;
+	    }
+	}
 }
