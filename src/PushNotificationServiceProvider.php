@@ -21,7 +21,8 @@ class PushNotificationServiceProvider extends ServiceProvider
         $this->publishes([
 			__DIR__.'/config/pixanpushnotifications.php' => config_path('pixanpushnotifications.php'),
             __DIR__.'/migrations/2016_10_02_225028_create_push_notifications_table.php' => 'database/migrations/2016_10_02_225028_create_push_notifications_table.php',
-            __DIR__.'/migrations/2016_10_11_225115_create_push_notification_user_table.php' => 'database/migrations/2016_10_11_225115_create_push_notification_user_table.php'
+            __DIR__.'/migrations/2016_10_11_225115_create_push_notification_user_table.php' => 'database/migrations/2016_10_11_225115_create_push_notification_user_table.php',
+			__DIR__.'/migrations/2016_10_25_000856_create_devices_table.php' => 'database/migrations/2016_10_25_000856_create_devices_table.php'
         ]);
 		$this->registerHelpers();
 	}
