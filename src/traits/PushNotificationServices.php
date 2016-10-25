@@ -8,6 +8,10 @@ use Pixan\PushNotifications\Transformers\PushNotificationTransformer;
 use Pixan\PushNotifications\Models\PushNotification;
 use Pixan\Api\Controllers\ApiController;
 
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
+
+use Pixan\PushNotifications\Models\Device;
+
 trait PushNotificationServices
 {
     public function index(APIController $apiController, PushNotificationTransformer $pushNotificationTransformer){
@@ -82,4 +86,19 @@ trait PushNotificationServices
             'pushNotification' => $pushNotification
         ]);
     }
+
+	public function test(APIController $apiController){
+
+		if(\Auth::check()){
+			$devices = Device::where('user_id', \Auth::user()->id)->where('active', true)->orderBy('created_at', 'desc')->pluck('ios_device_token')->all();
+			sendiOSPushNotification($devices, [
+				'type'	=> config('pixanpushnotifications.options.NOTIFICATION_TYPE_VERIFY'),
+				'alert' => '¡Todo en orden! Las notificaciones para su aplicación están funcionando correctamente'
+			]);
+		}
+
+		return $apiController->respondWithErrors([
+			'Este método solo está disponible para usuarios firmados'
+		], SymfonyResponse::HTTP_UNAUTHORIZED);
+	}
 }

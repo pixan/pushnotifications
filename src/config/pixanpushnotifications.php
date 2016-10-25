@@ -15,6 +15,9 @@ return [
     | - log_requests      : true or false
     */
     'options' => [
+
+		'NOTIFICATION_TYPE_VERIFY'	=> 'Pixan\PushNotifications\NOTIFICATION_TYPE_VERIFY',
+
         'environment'	=> env('APP_ENV'),
 
 		'local'	=> [
