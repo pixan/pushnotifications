@@ -95,6 +95,8 @@ trait PushNotificationServices
 				'type'	=> config('pixanpushnotifications.options.NOTIFICATION_TYPE_VERIFY'),
 				'alert' => '¡Todo en orden! Las notificaciones para su aplicación están funcionando correctamente'
 			]);
+
+			return $apiController->setMessages(['Se envió una notificación de prueba a su dispositivo'])->respondWithData([]);
 		}
 
 		return $apiController->respondWithErrors([
