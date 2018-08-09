@@ -13,13 +13,12 @@ class CreatePushNotificationsTable extends Migration
      */
     public function up()
     {
-        //
-		Schema::create('push_notifications', function(Blueprint $table){
-			$table->increments('id');
-			$table->string('title');
-			$table->boolean('active')->default(1);
+        Schema::create('push_notifications', function(Blueprint $table){
+            $table->increments('id');
+            $table->string('title');
+            $table->boolean('active')->default(1);
             $table->timestamps();
-		});
+        });
     }
 
     /**
@@ -29,7 +28,6 @@ class CreatePushNotificationsTable extends Migration
      */
     public function down()
     {
-        //
-		Schema::drop('push_notifications');
+        Schema::drop('push_notifications');
     }
 }

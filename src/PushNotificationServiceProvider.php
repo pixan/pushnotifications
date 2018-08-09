@@ -13,39 +13,34 @@ class PushNotificationServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
-
-
-		\Illuminate\Support\Facades\Route::model('pushnotification', Pixan\PushNotifications\Models\PushNotification::class);
+        \Illuminate\Support\Facades\Route::model('pushnotification', Pixan\PushNotifications\Models\PushNotification::class);
         $this->publishes([
-			__DIR__.'/config/pixanpushnotifications.php' => config_path('pixanpushnotifications.php'),
+            __DIR__.'/config/pixanpushnotifications.php' => config_path('pixanpushnotifications.php'),
             __DIR__.'/migrations/2016_10_02_225028_create_push_notifications_table.php' => 'database/migrations/2016_10_02_225028_create_push_notifications_table.php',
             __DIR__.'/migrations/2016_10_11_225115_create_push_notification_user_table.php' => 'database/migrations/2016_10_11_225115_create_push_notification_user_table.php',
-			__DIR__.'/migrations/2016_10_25_000856_create_devices_table.php' => 'database/migrations/2016_10_25_000856_create_devices_table.php'
+            __DIR__.'/migrations/2016_10_25_000856_create_devices_table.php' => 'database/migrations/2016_10_25_000856_create_devices_table.php'
         ]);
-		$this->registerHelpers();
-	}
+        $this->registerHelpers();
+    }
 
     /**
-     * Register the application services.
-     *
-     * @return void
-     */
+    * Register the application services.
+    *
+    * @return void
+    */
     public function register()
     {
-        //
-		$this->mergeConfigFrom(
+        $this->mergeConfigFrom(
             __DIR__.'/config/pixanpushnotifications.php', 'pixanpushnotifications'
         );
     }
 
-	public function registerHelpers()
-	{
-	    // Load the helpers in app/Http/helpers.php
-	    if (file_exists($file = __DIR__.'/helpers/helpers.php'))
-	    {
-	        require $file;
-	    }
-	}
+    public function registerHelpers()
+    {
+        // Load the helpers in app/Http/helpers.php
+        if (file_exists($file = __DIR__.'/helpers/helpers.php'))
+        {
+            require $file;
+        }
+    }
 }

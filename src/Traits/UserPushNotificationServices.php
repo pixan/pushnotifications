@@ -7,12 +7,13 @@ use Illuminate\Support\Facades\Validator;
 use Pixan\PushNotifications\Transformers\PushNotificationTransformer;
 use Pixan\PushNotifications\Models\PushNotification;
 use Pixan\Api\Controllers\ApiController;
-use App\User;
 
 trait UserPushNotificationServices
 {
-    public function index($user_id, APIController $apiController, PushNotificationTransformer $pushNotificationTransformer){
-        $user = User::findOrFail($user_id);
+    public function index($user_id, APIController $apiController, PushNotificationTransformer $pushNotificationTransformer)
+    {
+        $userModel = config('pixanpushnotifications.user_model', '\App\User');
+        $user = $userModel::findOrFail($user_id);
 
         $pushNotifications = PushNotification::leftJoin('push_notification_user', function($join) use ($user_id) {
             $join->on('push_notifications.id', '=', 'push_notification_user.push_notification_id');
@@ -24,34 +25,33 @@ trait UserPushNotificationServices
         ]);
     }
 
-    public function update($user_id, $pushNotification_id, Request $request, APIController $apiController, PushNotificationTransformer $pushNotificationTransformer){
-        $user = User::findOrFail($user_id);
+    public function update($user_id, $pushNotification_id, Request $request, APIController $apiController, PushNotificationTransformer $pushNotificationTransformer)
+    {
+        $userModel = config('pixanpushnotifications.user_model', '\App\User');
+        $user = $userModel::findOrFail($user_id);
 
         $validator = Validator::make($request->all(), [
-		   'status'	=> 'required|boolean'
+            'status'	=> 'required|boolean'
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return $apiController->respondWithValidationErrors(
                 $validator->errors()->all()
             );
         }
 
         $pushNotification = PushNotification::findOrFail($pushNotification_id);
-		if(boolval($request->get('status'))){
-			if(!$pushNotification->users->contains($user_id))
-				$pushNotification->users()->attach($user_id);
-			$pushNotification->enabled = true;
-		}
-		else{
-			$pushNotification->users()->detach($user_id);
-			$pushNotification->enabled = false;
-		}
+        if (boolval($request->get('status'))) {
+            if(!$pushNotification->users->contains($user_id))
+            $pushNotification->users()->attach($user_id);
+            $pushNotification->enabled = true;
+        } else {
+            $pushNotification->users()->detach($user_id);
+            $pushNotification->enabled = false;
+        }
 
         return $apiController->respondWithData([
             'pushNotification' => $pushNotificationTransformer->transform($pushNotification)
         ]);
-
     }
-
 }

@@ -13,14 +13,13 @@ class CreatePushNotificationUserTable extends Migration
      */
     public function up()
     {
-        //
-		Schema::create('push_notification_user', function(Blueprint $table){
-			$table->increments('id');
+        Schema::create('push_notification_user', function(Blueprint $table){
+            $table->increments('id');
             $table->integer('push_notification_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->foreign('push_notification_id')->references('id')->on('push_notifications')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-		});
+        });
     }
 
     /**
@@ -30,7 +29,6 @@ class CreatePushNotificationUserTable extends Migration
      */
     public function down()
     {
-        //
-		Schema::drop('push_notification_user');
+        Schema::drop('push_notification_user');
     }
 }
