@@ -10,6 +10,6 @@ class Device extends Model
 
     public function users()
     {
-        return $this->belongsToMany(config('pixanpushnotifications.user_model'), 'user_id');
+        return $this->belongsToMany(config('pixanpushnotifications.user_model', '\App\User'), 'user_id');
     }
 }
